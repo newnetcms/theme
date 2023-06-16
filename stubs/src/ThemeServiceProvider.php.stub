@@ -1,0 +1,16 @@
+<?php
+
+namespace Themes\__THEME_CLASS_NAME__;
+
+use Newnet\Asset\Facades\Asset;
+use Newnet\Theme\Support\BaseThemeServiceProvider;
+
+class ThemeServiceProvider extends BaseThemeServiceProvider
+{
+    public function boot()
+    {
+        parent::boot();
+
+        Asset::addVersioning();
+    }
+}
