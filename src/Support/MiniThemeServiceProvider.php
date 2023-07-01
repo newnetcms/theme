@@ -4,6 +4,7 @@ namespace Newnet\Theme\Support;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Newnet\Theme\Facades\Theme;
 
 abstract class MiniThemeServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,7 @@ abstract class MiniThemeServiceProvider extends ServiceProvider
         $this->publishes([
             $this->getThemePath('public') => public_path('themes/'.$this->getThemeName()),
         ], 'theme');
+        Theme::set($this->getThemeName());
     }
 
     protected function loadRoutes()
