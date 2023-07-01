@@ -20,6 +20,9 @@ abstract class MiniThemeServiceProvider extends ServiceProvider
     {
         $this->loadRoutes();
         $this->loadTranslationsFrom($this->getThemePath('lang'), $this->getThemeName());
+        $this->publishes([
+            $this->getThemePath('public') => public_path('themes/'.$this->getThemeName()),
+        ], 'theme');
     }
 
     protected function loadRoutes()
