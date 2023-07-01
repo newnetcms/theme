@@ -7,11 +7,12 @@ use Illuminate\Support\ServiceProvider;
 
 abstract class MiniThemeServiceProvider extends ServiceProvider
 {
-    abstract public function getThemeName();
+    abstract public function getThemeName(): string;
 
     public function register()
     {
         $this->registerHelper();
+        $this->registerThemeView();
         $this->loadJsonTranslationsFrom($this->getThemePath('lang'));
     }
 
@@ -42,6 +43,24 @@ abstract class MiniThemeServiceProvider extends ServiceProvider
             Route::middleware(['api'])
                 ->prefix('api')
                 ->group($routeApi);
+        }
+    }
+
+    protected function registerThemeView()
+    {
+        $viewFinder = $this->app['view']->getFinder();
+        $viewFinder->prependLocation($this->getThemePath('resources/views'));
+
+        $vendorViewsPath = $this->getThemePath('resources/views/vendor');
+        if (is_dir($vendorViewsPath)) {
+            $directories = scandir($vendorViewsPath);
+
+            foreach ($directories as $namespace) {
+                if ($namespace != '.' && $namespace != '..') {
+                    $path = $vendorViewsPath . DIRECTORY_SEPARATOR . $namespace;
+                    $viewFinder->prependNamespace($namespace, $path);
+                }
+            }
         }
     }
 

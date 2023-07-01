@@ -3,14 +3,15 @@
 if (!function_exists('theme_setting')) {
     function theme_setting($key, $default = null)
     {
-        return Theme::setting($key, $default);
+        return setting($key, $default);
     }
 }
 
 if (!function_exists('theme_url')) {
     function theme_url($filename): string
     {
-        return Theme::url($filename);
+        $theme = Theme::current();
+        return asset("themes/{$theme}/assets/$filename");
     }
 }
 
