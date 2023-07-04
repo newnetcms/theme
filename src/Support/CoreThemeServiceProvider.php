@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Newnet\Theme\Facades\Theme;
 
-abstract class MiniThemeServiceProvider extends ServiceProvider
+abstract class CoreThemeServiceProvider extends ServiceProvider
 {
     abstract public function getThemeName(): string;
 

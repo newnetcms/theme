@@ -7,17 +7,19 @@ use Newnet\Theme\Generators\ThemeGenerator;
 
 class CreateThemeCommand extends Command
 {
-    protected $signature = 'cms:create-theme {name?}';
+    protected $signature = 'cms:create-theme {name?} {--dev}';
 
     protected $description = 'Create a new theme';
 
     public function handle()
     {
         $name = $this->askForName();
+        $isDev = $this->option('dev');
 
         app(ThemeGenerator::class)
             ->setThemeName($name)
             ->setConsole($this)
+            ->setIsDev($isDev)
             ->generate();
     }
 

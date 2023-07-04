@@ -5,11 +5,12 @@ namespace Newnet\Theme\Generators;
 use Illuminate\Console\Command as Console;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Newnet\Theme\Facades\Theme;
 
 class ThemeGenerator
 {
     protected string $themeName;
+
+    protected bool $isDev;
 
     protected Console $console;
 
@@ -18,7 +19,7 @@ class ThemeGenerator
     ];
 
     protected array $files = [
-        'theme.json.stub' => 'theme.json',
+        'composer.json.stub' => 'composer.json',
         'readme.md.stub' => 'readme.md',
         'screenshot.png.stub' => 'screenshot.png',
         'src/ThemeServiceProvider.php.stub' => 'src/ThemeServiceProvider.php',
@@ -34,6 +35,13 @@ class ThemeGenerator
     public function setThemeName($themeName): static
     {
         $this->themeName = $themeName;
+
+        return $this;
+    }
+
+    public function setIsDev($isDev): static
+    {
+        $this->isDev = $isDev;
 
         return $this;
     }
@@ -88,16 +96,22 @@ class ThemeGenerator
             '__THEME_NAME__',
             '__THEME_CLASS_NAME__',
             '__THEME_FOLDER__',
+            '__COMPOSER_NAME__',
         ], [
             $this->themeName,
             Str::studly($this->themeName),
             $this->getThemeFolder(),
+            $this->isDev ? 'newnetcms/theme-'.$this->getThemeFolder() : 'themes/'.$this->getThemeFolder(),
         ], $content);
     }
 
     private function getThemePath(): string
     {
-        return Theme::themePath($this->getThemeFolder());
+        if ($this->isDev) {
+            return base_path('lib'.DIRECTORY_SEPARATOR.'theme-'.$this->getThemeFolder());
+        } else {
+            return base_path('themes'.DIRECTORY_SEPARATOR.$this->getThemeFolder());
+        }
     }
 
     private function getThemeFolder(): string

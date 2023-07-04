@@ -1,6 +1,0 @@
-{
-    "name": "__THEME_FOLDER__",
-    "description": "__THEME_NAME__",
-    "namespace": "Themes\\__THEME_CLASS_NAME__\\",
-    "provider": "Themes\\__THEME_CLASS_NAME__\\ThemeServiceProvider"
-}

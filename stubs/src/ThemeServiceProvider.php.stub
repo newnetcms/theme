@@ -2,15 +2,12 @@
 
 namespace Themes\__THEME_CLASS_NAME__;
 
-use Newnet\Asset\Facades\Asset;
-use Newnet\Theme\Support\BaseThemeServiceProvider;
+use Newnet\Theme\Support\CoreThemeServiceProvider;
 
-class ThemeServiceProvider extends BaseThemeServiceProvider
+class ThemeServiceProvider extends CoreThemeServiceProvider
 {
-    public function boot()
+    public function getThemeName(): string
     {
-        parent::boot();
-
-        Asset::addVersioning();
+        return '__THEME_FOLDER__';
     }
 }
