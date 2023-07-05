@@ -4,8 +4,8 @@ namespace Newnet\Theme;
 
 use Composer\Autoload\ClassLoader;
 use Newnet\Module\Support\BaseModuleServiceProvider;
-use Newnet\Theme\Console\Commands\CreateThemeCommand;
-use Newnet\Theme\Console\Commands\LinkThemeCommand;
+use Newnet\Theme\Console\Commands\ThemeLinkCommand;
+use Newnet\Theme\Console\Commands\ThemeCreateCommand;
 use Newnet\Theme\Facades\Theme;
 
 class ThemeServiceProvider extends BaseModuleServiceProvider
@@ -29,8 +29,8 @@ class ThemeServiceProvider extends BaseModuleServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                CreateThemeCommand::class,
-                LinkThemeCommand::class,
+                ThemeLinkCommand::class,
+                ThemeCreateCommand::class,
             ]);
         }
     }

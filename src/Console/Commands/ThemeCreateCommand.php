@@ -5,9 +5,9 @@ namespace Newnet\Theme\Console\Commands;
 use Illuminate\Console\Command;
 use Newnet\Theme\Generators\ThemeGenerator;
 
-class CreateThemeCommand extends Command
+class ThemeCreateCommand extends Command
 {
-    protected $signature = 'cms:create-theme {name?} {--dev}';
+    protected $signature = 'cms:theme.create {name?} {--dev}';
 
     protected $description = 'Create a new theme';
 

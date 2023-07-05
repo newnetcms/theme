@@ -6,9 +6,9 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
-class LinkThemeCommand extends Command
+class ThemeLinkCommand extends Command
 {
-    protected $name = 'cms:link-theme';
+    protected $name = 'cms:theme.link';
 
     protected $description = 'Link theme asset into public for developemnt';
 
