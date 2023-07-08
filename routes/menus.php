@@ -18,10 +18,10 @@ AdminMenu::addItem(__('theme::theme-setting.model_name'), [
     'order' => 1,
 ]);
 
-AdminMenu::addItem(__('theme::theme-manager.model_name'), [
-    'id' => ThemeAdminMenuKey::MANAGER,
-    'parent' => ThemeAdminMenuKey::THEME,
-    'route' => 'theme.admin.theme-manager.index',
-    'icon' => 'fas fa-palette',
-    'order' => 2,
-]);
+//AdminMenu::addItem(__('theme::theme-manager.model_name'), [
+//    'id' => ThemeAdminMenuKey::MANAGER,
+//    'parent' => ThemeAdminMenuKey::THEME,
+//    'route' => 'theme.admin.theme-manager.index',
+//    'icon' => 'fas fa-palette',
+//    'order' => 2,
+//]);

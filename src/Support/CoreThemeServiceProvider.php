@@ -4,6 +4,7 @@ namespace Newnet\Theme\Support;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Newnet\AdminUi\Facades\AdminMenu;
 use Newnet\Theme\Facades\Theme;
 
 abstract class CoreThemeServiceProvider extends ServiceProvider
@@ -25,6 +26,8 @@ abstract class CoreThemeServiceProvider extends ServiceProvider
             $this->getThemePath('public') => public_path('themes/'.$this->getThemeName()),
         ], 'theme');
         Theme::set($this->getThemeName());
+
+        $this->registerAdminMenus();
     }
 
     protected function loadRoutes()
@@ -75,6 +78,12 @@ abstract class CoreThemeServiceProvider extends ServiceProvider
         if (file_exists($helperFile)) {
             require_once $helperFile;
         }
+    }
+
+    protected function registerAdminMenus()
+    {
+        $adminMenuFile = $this->getThemePath('routes/menus.php');
+        AdminMenu::loadMenuFrom($adminMenuFile);
     }
 
     protected function getThemeDir()
