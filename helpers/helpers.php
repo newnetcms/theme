@@ -8,10 +8,12 @@ if (!function_exists('theme_setting')) {
 }
 
 if (!function_exists('theme_url')) {
-    function theme_url($filename): string
+    function theme_url($filename, $fullUrl = false): string
     {
         $theme = Theme::current();
-        return asset("themes/{$theme}/assets/$filename");
+        return $fullUrl ?
+            asset("themes/{$theme}/assets/$filename") :
+            "/themes/{$theme}/assets/$filename";
     }
 }
 

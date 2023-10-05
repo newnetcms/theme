@@ -28,6 +28,7 @@ abstract class CoreThemeServiceProvider extends ServiceProvider
         Theme::set($this->getThemeName());
 
         $this->registerAdminMenus();
+        $this->registerAssets();
     }
 
     protected function loadRoutes()
@@ -84,6 +85,11 @@ abstract class CoreThemeServiceProvider extends ServiceProvider
     {
         $adminMenuFile = $this->getThemePath('routes/menus.php');
         AdminMenu::loadMenuFrom($adminMenuFile);
+    }
+
+    protected function registerAssets()
+    {
+
     }
 
     protected function getThemeDir()
