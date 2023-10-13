@@ -28,7 +28,10 @@ abstract class CoreThemeServiceProvider extends ServiceProvider
         Theme::set($this->getThemeName());
 
         $this->registerAdminMenus();
-        $this->registerAssets();
+
+        if (!request()->is(config('core.admin_prefix').'*')) {
+            $this->registerAssets();
+        }
     }
 
     protected function loadRoutes()
