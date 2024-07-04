@@ -7,6 +7,7 @@ use Newnet\Module\Support\BaseModuleServiceProvider;
 use Newnet\Theme\Console\Commands\ThemeLinkCommand;
 use Newnet\Theme\Console\Commands\ThemeCreateCommand;
 use Newnet\Theme\Facades\Theme;
+use Newnet\Theme\Http\Middleware\MaintenanceMode;
 
 class ThemeServiceProvider extends BaseModuleServiceProvider
 {
@@ -32,6 +33,12 @@ class ThemeServiceProvider extends BaseModuleServiceProvider
                 ThemeLinkCommand::class,
                 ThemeCreateCommand::class,
             ]);
+        }
+
+        // MaintenanceMode
+        if (setting('maintenance_enabled')) {
+            $router = $this->app['router'];
+            $router->pushMiddlewareToGroup('web', MaintenanceMode::class);
         }
     }
 

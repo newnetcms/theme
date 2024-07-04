@@ -37,6 +37,7 @@
 @show
 
 @includeIf('path.footer')
+@includeIf('path.maintenance_alert')
 
 {!! Asset::container('footer')->styles() !!}
 
