@@ -36,9 +36,6 @@
     </style>
 </head>
 <body>
-<!-- Customize Icon Color -->
-<!-- https://www.flaticon.com/free-icon/fast-time_2972562?term=clock&page=1&position=27# -->
-<?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" id="coming_soon" enable-background="new 0 0 512 512" height="512px" viewBox="0 0 512 512" width="512px">
     <g>
         <g>
