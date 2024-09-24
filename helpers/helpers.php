@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 if (!function_exists('theme_setting')) {
     function theme_setting($key, $default = null)
     {
@@ -10,10 +12,14 @@ if (!function_exists('theme_setting')) {
 if (!function_exists('theme_url')) {
     function theme_url($filename, $fullUrl = false): string
     {
+        if(Str::contains(Theme::path(), public_path())) {
+            $public = '/public';
+        } else $public = '';
+
         $theme = Theme::current();
         return $fullUrl ?
-            asset("themes/{$theme}/assets/$filename") :
-            "/themes/{$theme}/assets/$filename";
+            asset("themes/{$theme}{$public}/assets/$filename") :
+            "/themes/{$theme}{$public}/assets/$filename";
     }
 }
 

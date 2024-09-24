@@ -15,8 +15,6 @@ class ThemeManager
     public function set($theme): void
     {
         $this->finder()->setActiveTheme($theme);
-
-        $this->loadServiceProvider();
     }
 
     public function clear(): void
@@ -98,10 +96,5 @@ class ThemeManager
     protected function finder(): ThemeViewFinder
     {
         return app('theme.finder');
-    }
-
-    protected function loadServiceProvider(): void
-    {
-
     }
 }

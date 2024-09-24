@@ -3,6 +3,8 @@
 namespace Newnet\Theme;
 
 use Composer\Autoload\ClassLoader;
+use Illuminate\Support\Facades\File;
+use MCStreetguy\ComposerParser\Factory as ComposerParser;
 use Newnet\Module\Support\BaseModuleServiceProvider;
 use Newnet\Theme\Console\Commands\ThemeLinkCommand;
 use Newnet\Theme\Console\Commands\ThemeCreateCommand;
@@ -53,16 +55,33 @@ class ThemeServiceProvider extends BaseModuleServiceProvider
     {
         $theme = config('cms.theme.current_theme') ?: setting('theme_name');
         if ($theme) {
-            Theme::set($theme);
+            $theme_composer_path = public_path("themes/{$theme}/composer.json");
+            $root_composer_path = base_path('composer.json');
+            if (File::exists($theme_composer_path) && File::exists($root_composer_path)) {
+                $theme_composer = ComposerParser::parse($theme_composer_path);
+                $root_composer = ComposerParser::parse($root_composer_path);
+                $theme_composer_name = $theme_composer->getName();
+                $root_composer_require = $root_composer->getRequire();
 
-            if ($namespace = Theme::config('namespace')) {
-                $composerLoader = new ClassLoader();
-                $composerLoader->setPsr4($namespace, Theme::path('src'));
-                $composerLoader->register();
+                if (!isset($root_composer_require[$theme_composer_name])) {
+                    // Active Theme
+                    Theme::set($theme);
 
-                if ($provider = Theme::config('provider')) {
-                    if (class_exists($provider)) {
-                        $this->app->register($provider);
+                    // Autoloader
+                    $composerLoader = new ClassLoader();
+                    $namespaces = $theme_composer->getAutoload()->getPsr4()->getNamespaces();
+                    foreach ($namespaces as $val) {
+                        $composerLoader->setPsr4($val['namespace'], Theme::path($val['source']));
+                    }
+                    $composerLoader->register();
+
+                    $extra = $theme_composer->getExtra();
+                    if (isset($extra['laravel']['providers'])) {
+                        foreach ($extra['laravel']['providers'] as $provider) {
+                            if (class_exists($provider)) {
+                                $this->app->register($provider);
+                            }
+                        }
                     }
                 }
             }
