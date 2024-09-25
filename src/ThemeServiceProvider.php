@@ -4,7 +4,6 @@ namespace Newnet\Theme;
 
 use Composer\Autoload\ClassLoader;
 use Illuminate\Support\Facades\File;
-use MCStreetguy\ComposerParser\Factory as ComposerParser;
 use Newnet\Module\Support\BaseModuleServiceProvider;
 use Newnet\Theme\Console\Commands\ThemeLinkCommand;
 use Newnet\Theme\Console\Commands\ThemeCreateCommand;
@@ -53,34 +52,33 @@ class ThemeServiceProvider extends BaseModuleServiceProvider
 
     protected function activateTheme()
     {
-        $theme = config('cms.theme.current_theme') ?: setting('theme_name');
+        $theme = config('cms.theme.current_theme');
         if ($theme) {
             $theme_composer_path = public_path("themes/{$theme}/composer.json");
             $root_composer_path = base_path('composer.json');
             if (File::exists($theme_composer_path) && File::exists($root_composer_path)) {
-                $theme_composer = ComposerParser::parse($theme_composer_path);
-                $root_composer = ComposerParser::parse($root_composer_path);
-                $theme_composer_name = $theme_composer->getName();
-                $root_composer_require = $root_composer->getRequire();
+                $theme_composer = File::json($theme_composer_path);
+                $root_composer = File::json($root_composer_path);
+                $theme_composer_name = $theme_composer['name'];
+                $root_composer_require = $root_composer['require'];
 
                 if (!isset($root_composer_require[$theme_composer_name])) {
                     // Active Theme
                     Theme::set($theme);
 
-                    // Autoloader
+                    // Register Autoloader
                     $composerLoader = new ClassLoader();
-                    $namespaces = $theme_composer->getAutoload()->getPsr4()->getNamespaces();
-                    foreach ($namespaces as $val) {
-                        $composerLoader->setPsr4($val['namespace'], Theme::path($val['source']));
+                    $namespaces = $theme_composer['autoload']['psr-4'] ?? [];
+                    foreach ($namespaces as $name => $src) {
+                        $composerLoader->setPsr4($name, Theme::path($src));
                     }
                     $composerLoader->register();
 
-                    $extra = $theme_composer->getExtra();
-                    if (isset($extra['laravel']['providers'])) {
-                        foreach ($extra['laravel']['providers'] as $provider) {
-                            if (class_exists($provider)) {
-                                $this->app->register($provider);
-                            }
+                    // Register Provider
+                    $providers = $theme_composer['extra']['laravel']['providers'] ?? [];
+                    foreach ($providers as $provider) {
+                        if (class_exists($provider)) {
+                            $this->app->register($provider);
                         }
                     }
                 }
