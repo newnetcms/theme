@@ -29,7 +29,7 @@ abstract class CoreThemeServiceProvider extends ServiceProvider
 
         $this->registerAdminMenus();
 
-        if (!request()->is(config('core.admin_prefix').'*')) {
+        if (!$this->app->runningInConsole() && !request()->is(config('core.admin_prefix').'*')) {
             $this->registerAssets();
         }
     }
