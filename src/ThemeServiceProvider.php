@@ -5,6 +5,7 @@ namespace Newnet\Theme;
 use Composer\Autoload\ClassLoader;
 use Illuminate\Support\Facades\File;
 use Newnet\Module\Support\BaseModuleServiceProvider;
+use Newnet\Theme\Console\Commands\ThemeInstallCommand;
 use Newnet\Theme\Console\Commands\ThemeLinkCommand;
 use Newnet\Theme\Console\Commands\ThemeCreateCommand;
 use Newnet\Theme\Facades\Theme;
@@ -21,20 +22,19 @@ class ThemeServiceProvider extends BaseModuleServiceProvider
         $this->registerThemeConfig();
 
         $this->registerThemeFinder();
+
+        $this->activateTheme();
     }
 
     public function boot()
     {
         parent::boot();
 
-        $this->activateTheme();
-
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                ThemeLinkCommand::class,
-                ThemeCreateCommand::class,
-            ]);
-        }
+        $this->commands([
+            ThemeLinkCommand::class,
+            ThemeCreateCommand::class,
+            ThemeInstallCommand::class,
+        ]);
 
         // MaintenanceMode
         if (setting('maintenance_enabled')) {
