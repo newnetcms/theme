@@ -2,11 +2,6 @@
 
 Theme key: `__THEME_FOLDER__`
 
-## Install
-`npm install`
-
-## Dev
-`npm run watch`
-
-## Build
-`npm run prod`
+```
+sass --watch --style=compressed style.scss style.css
+```
