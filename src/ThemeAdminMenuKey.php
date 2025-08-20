@@ -9,4 +9,6 @@ class ThemeAdminMenuKey
     const SETTING = 'theme_setting';
 
     const MANAGER = 'theme_manager';
+
+    const TRANSLATE = 'theme_translate';
 }

@@ -2,6 +2,7 @@
 
 use Newnet\Theme\Http\Controllers\Admin\ThemeManagerController;
 use Newnet\Theme\Http\Controllers\Admin\ThemeSettingController;
+use Newnet\Theme\Http\Controllers\Admin\ThemeTranslateController;
 
 Route::prefix('theme')
     ->middleware('admin.acl')
@@ -17,4 +18,10 @@ Route::prefix('theme')
 
         Route::post('setting/save', [ThemeSettingController::class, 'save'])
             ->name('theme.admin.theme-setting.save');
+
+        Route::get('translate', [ThemeTranslateController::class, 'index'])
+            ->name('theme.admin.theme-translate.index');
+
+        Route::post('translate', [ThemeTranslateController::class, 'save'])
+            ->name('theme.admin.theme-translate.save');
 });

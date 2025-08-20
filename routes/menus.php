@@ -18,6 +18,14 @@ AdminMenu::addItem(__('theme::theme-setting.model_name'), [
     'order' => 1,
 ]);
 
+AdminMenu::addItem(__('theme::theme-translate.model_name'), [
+    'id' => ThemeAdminMenuKey::TRANSLATE,
+    'parent' => ThemeAdminMenuKey::THEME,
+    'route' => 'theme.admin.theme-translate.index',
+    'icon' => 'fas fa-cog',
+    'order' => 2,
+]);
+
 //AdminMenu::addItem(__('theme::theme-manager.model_name'), [
 //    'id' => ThemeAdminMenuKey::MANAGER,
 //    'parent' => ThemeAdminMenuKey::THEME,
