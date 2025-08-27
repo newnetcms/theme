@@ -27,6 +27,7 @@
     {!! theme_setting('code_head') !!}
 </head>
 <body class="@yield('body-class')">
+{!! theme_setting('code_body') !!}
 
 @includeIf('path.header')
 
