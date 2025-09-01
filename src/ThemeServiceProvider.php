@@ -37,10 +37,8 @@ class ThemeServiceProvider extends BaseModuleServiceProvider
         ]);
 
         // MaintenanceMode
-        if (setting('maintenance_enabled')) {
-            $router = $this->app['router'];
-            $router->pushMiddlewareToGroup('web', MaintenanceMode::class);
-        }
+        $router = $this->app['router'];
+        $router->pushMiddlewareToGroup('web', MaintenanceMode::class);
     }
 
     protected function registerThemeConfig()

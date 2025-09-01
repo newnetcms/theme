@@ -19,4 +19,15 @@ return [
     | The base path where all the themes are located.
     */
     'base_path' => public_path('themes'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Maintenance Mode
+    |--------------------------------------------------------------------------
+    |
+    | Determines whether the application is currently running in maintenance
+    | mode. When enabled, users will see a maintenance notice instead of
+    | accessing the normal application content.
+    */
+    'maintenance_mode' => env('MAINTENANCE_MODE'),
 ];

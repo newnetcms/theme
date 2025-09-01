@@ -17,6 +17,10 @@ class MaintenanceMode
      */
     public function handle($request, Closure $next)
     {
+        if (!config('cms.theme.maintenance_mode')) {
+            return $next($request);
+        }
+
         $admin_prefix = config('core.admin_prefix');
         if ($request->is($admin_prefix.'*')) {
             return $next($request);
