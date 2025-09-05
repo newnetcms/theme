@@ -7,7 +7,10 @@
     <meta name="referrer" content="no-referrer-when-downgrade" />
     <title>@yield('meta_title', setting('seo_meta_title') ?: setting('site_title', config('app.name')))</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ get_setting_media_url('favicon', '', asset('vendor/newnet-admin/img/icon/favicon.ico')) }}">
+
+    @if($favicon = get_setting_media_url('favicon'))
+        <link rel="icon" href="{{ $favicon }}">
+    @endif
 
     @yield('meta')
     @stack('metas')
