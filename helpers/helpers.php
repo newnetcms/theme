@@ -17,11 +17,11 @@ if (!function_exists('theme_url')) {
         /*
          * 1. Xác định có /public trong assets hay không
          */
-        $hasPublic = config('theme.asset_has_public');
+        $hasPublic = config('cms.theme.asset_has_public');
 
         // Auto-detect nếu config = null (backward compatible)
         if ($hasPublic === null) {
-            $assetFolder = config('theme.asset_folder', 'assets');
+            $assetFolder = config('cms.theme.asset_folder', 'assets');
 
             $hasPublic = is_dir(
                 public_path("themes/{$theme}/public/{$assetFolder}")
@@ -31,7 +31,7 @@ if (!function_exists('theme_url')) {
         /*
          * 2. Asset folder (assets / static / v.v.)
          */
-        $assetFolder = config('theme.asset_folder', 'assets');
+        $assetFolder = config('cms.theme.asset_folder', 'assets');
 
         $publicSegment = $hasPublic ? '/public' : '';
 
