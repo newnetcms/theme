@@ -30,4 +30,25 @@ return [
     | accessing the normal application content.
     */
     'maintenance_mode' => env('MAINTENANCE_MODE'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Asset structure
+    |--------------------------------------------------------------------------
+    |
+    | If true:
+    |   themes/{theme}/public/assets/...
+    | If false:
+    |   themes/{theme}/assets/...
+    */
+    'asset_has_public' => env('CMS_THEME_ASSET_HAS_PUBLIC', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Asset folder name
+    |--------------------------------------------------------------------------
+    |
+    | Allow future customization if needed
+    */
+    'asset_folder' => env('CMS_THEME_ASSET_FOLDER', 'assets'),
 ];

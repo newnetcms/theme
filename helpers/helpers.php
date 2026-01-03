@@ -10,16 +10,34 @@ if (!function_exists('theme_setting')) {
 }
 
 if (!function_exists('theme_url')) {
-    function theme_url($filename, $fullUrl = false): string
+    function theme_url(string $filename, bool $fullUrl = false): string
     {
-        if(Str::contains(Theme::path(), public_path())) {
-            $public = '/public';
-        } else $public = '';
-
         $theme = Theme::current();
-        return $fullUrl ?
-            asset("themes/{$theme}{$public}/assets/$filename") :
-            "/themes/{$theme}{$public}/assets/$filename";
+
+        /*
+         * 1. Xác định có /public trong assets hay không
+         */
+        $hasPublic = config('theme.asset_has_public');
+
+        // Auto-detect nếu config = null (backward compatible)
+        if ($hasPublic === null) {
+            $assetFolder = config('theme.asset_folder', 'assets');
+
+            $hasPublic = is_dir(
+                public_path("themes/{$theme}/public/{$assetFolder}")
+            );
+        }
+
+        /*
+         * 2. Asset folder (assets / static / v.v.)
+         */
+        $assetFolder = config('theme.asset_folder', 'assets');
+
+        $publicSegment = $hasPublic ? '/public' : '';
+
+        $path = "themes/{$theme}{$publicSegment}/{$assetFolder}/" . ltrim($filename, '/');
+
+        return $fullUrl ? asset($path) : '/' . $path;
     }
 }
 
