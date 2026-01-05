@@ -29,21 +29,21 @@ class ThemeViewFinder extends FileViewFinder
         $this->hints = $hints;
     }
 
-    public function getThemePath(string $theme, string $path = null): string
+    public function getThemePath(string $theme, ?string $path = null): string
     {
         return $this->resolvePath(
             config('cms.theme.base_path') . DIRECTORY_SEPARATOR . $theme . ($path ? DIRECTORY_SEPARATOR . $path : '')
         );
     }
 
-    public function getThemeViewPath(string $theme = null): string
+    public function getThemeViewPath(?string $theme = null): string
     {
         $theme = $theme ?? $this->getActiveTheme();
 
         return $this->getThemePath($theme, 'resources' . DIRECTORY_SEPARATOR . 'views');
     }
 
-    public function getActiveTheme()
+    public function getActiveTheme(): ?string
     {
         return $this->activeTheme;
     }
