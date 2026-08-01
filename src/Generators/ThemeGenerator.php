@@ -110,7 +110,7 @@ class ThemeGenerator
         if ($this->isDev) {
             return base_path('lib'.DIRECTORY_SEPARATOR.'theme-'.$this->getThemeFolder());
         } else {
-            return base_path('themes'.DIRECTORY_SEPARATOR.$this->getThemeFolder());
+            return base_path('public'.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$this->getThemeFolder());
         }
     }
 
