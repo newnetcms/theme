@@ -63,6 +63,9 @@ abstract class CoreThemeServiceProvider extends ServiceProvider
         $viewFinder = $this->app['view']->getFinder();
         $viewFinder->prependLocation($this->getThemePath('resources/views'));
 
+        // Sync view.paths config so code reading config (not ViewFinder) also finds theme views
+        config(['view.paths' => $viewFinder->getPaths()]);
+
         $vendorViewsPath = $this->getThemePath('resources/views/vendor');
         if (is_dir($vendorViewsPath)) {
             $directories = scandir($vendorViewsPath);
